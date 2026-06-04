@@ -2,6 +2,7 @@ import { test, expect, request } from '@playwright/test';
 import tags from '../test-data/tags.json'
 
 test.beforeEach(async ({ page }) => {
+  
   await page.route('*/**/api/tags', async route => {
     await route.fulfill({
       body: JSON.stringify(tags)
@@ -9,10 +10,8 @@ test.beforeEach(async ({ page }) => {
   })
 
   await page.goto('https://conduit.bondaracademy.com/');
-  await page.getByText('Sign in').click()
-  await page.getByRole('textbox', { name: "Email" }).fill('igorgolachev@gmail.com')
-  await page.getByRole('textbox', { name: "Password" }).fill('12345678')
-  await page.getByRole('button').click()
+  await page.locator('.navbar-brand').waitFor();
+
 })
 
 test('has title', async ({ page }) => {
